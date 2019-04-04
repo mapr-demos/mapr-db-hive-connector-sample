@@ -7,3 +7,5 @@ target
 # Logs
 logs
 *.log
+
+.attach*
