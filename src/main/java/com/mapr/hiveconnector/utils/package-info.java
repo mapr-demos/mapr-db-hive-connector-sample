@@ -1,4 +1,4 @@
 /**
  * The package for the utility classes.
  */
-package utils;
+package com.mapr.hiveconnector.utils;

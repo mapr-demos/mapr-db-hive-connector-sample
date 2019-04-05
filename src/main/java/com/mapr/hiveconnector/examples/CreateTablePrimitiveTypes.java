@@ -1,6 +1,6 @@
-package examples;
+package com.mapr.hiveconnector.examples;
 
-import utils.DaoManager;
+import com.mapr.hiveconnector.utils.DaoManager;
 
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -8,11 +8,15 @@ import java.sql.Statement;
 
 /**
  * The class CreateTablePrimitiveTypes is responsible
- *  * for creating table in the database.
+ * for creating table in the database.
  */
 public class CreateTablePrimitiveTypes {
 
+    /**
+     * The table name.
+     */
     private static String tableName = "primitive_types_from_java";
+
     /**
      * The SQL createSQL for creating the primitive types table.
      */
@@ -42,16 +46,16 @@ public class CreateTablePrimitiveTypes {
         try (Connection connection = DaoManager.getInstance().getConnection();
              Statement state = connection.createStatement()) {
 
-            System.out.println("Creating table " + tableName + "...");
+            System.out.println("INFO: -= Creating table " + tableName + "...");
             state.execute("DROP TABLE IF EXISTS " + tableName);
             state.execute(createSQL);
-            System.out.println("Table " + tableName + " is created");
+            System.out.println("INFO: -= Table " + tableName + " is created");
 
         } catch(SQLException sqlException) {
-            System.out.println("Got sql exception");
+            System.err.println("ERROR: -= Got a sql exception");
             sqlException.printStackTrace();
         } catch(Exception e) {
-            System.out.println("Got exception");
+            System.err.println("ERROR: -= Got an exception");
             e.printStackTrace();
         }
     }

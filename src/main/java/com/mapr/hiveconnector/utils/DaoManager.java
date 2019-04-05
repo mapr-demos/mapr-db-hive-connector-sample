@@ -1,4 +1,4 @@
-package utils;
+package com.mapr.hiveconnector.utils;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -78,9 +78,9 @@ public class DaoManager {
             this.dataBaseName = properties.getProperty("databaseName");
             this.user = properties.getProperty("user");
             this.password = properties.getProperty("password");
-            System.out.println("Database initialized");
+            System.out.println("INFO: -= Database initialized");
         } catch (IOException e) {
-            System.out.println(e.getMessage());
+            System.err.println(e.getMessage());
         }
     }
 
@@ -94,9 +94,9 @@ public class DaoManager {
             Class.forName(this.driver);
             connection = DriverManager.getConnection(this.url + this.dataBaseName, this.user, this.password);
         } catch (SQLException | ClassNotFoundException e) {
-            System.out.println(e.getMessage());
+            System.err.println(e.getMessage());
         }
-        System.out.println("Connection established");
+        System.out.println("INFO: -= Connection established");
         return connection;
     }
 }

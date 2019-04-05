@@ -1,6 +1,6 @@
-package examples;
+package com.mapr.hiveconnector.examples;
 
-import utils.DaoManager;
+import com.mapr.hiveconnector.utils.DaoManager;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -27,17 +27,17 @@ public class ShowTables {
 
         try (Connection connection = DaoManager.getInstance().getConnection();
              Statement state = connection.createStatement()) {
-            System.out.println("Listing tables in hive");
+            System.out.println("INFO: -= Tables list:");
             ResultSet show_tables = state.executeQuery(selectSQL);
 
             while (show_tables.next()) {
                 System.out.println(show_tables.getString(1));
             }
         } catch(SQLException sqlException) {
-            System.out.println("Got sql exception");
+            System.err.println("ERROR: -= Got a sql exception");
             sqlException.printStackTrace();
         } catch(Exception e) {
-            System.out.println("Got exception");
+            System.err.println("ERROR: -= Got an exception");
             e.printStackTrace();
         }
     }
