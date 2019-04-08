@@ -15,7 +15,7 @@ import java.sql.Statement;
 public class ShowTables {
 
     /**
-     * The SQL selectSQL for displaying list of tables.
+     * The selectSQL for displaying list of tables.
      */
     private static String selectSQL = "show tables";
 

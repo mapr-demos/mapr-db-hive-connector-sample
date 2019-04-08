@@ -1,4 +1,4 @@
-package com.mapr.hiveconnector.examples;
+package com.mapr.hiveconnector.examples.querying;
 
 import com.mapr.hiveconnector.utils.DaoManager;
 
@@ -16,7 +16,7 @@ public class SelectFromTablePrimitiveTypes {
     private static String tableName = "primitive_types_from_java";
 
     /**
-     * The SQL selectSQL for selecting values into table.
+     * The selectSQL for selecting values into table.
      */
     private static String selectSQL = "SELECT "
             + "doc_id, bo, d, da, f, i, s, ts, ti, bi, si, bin "

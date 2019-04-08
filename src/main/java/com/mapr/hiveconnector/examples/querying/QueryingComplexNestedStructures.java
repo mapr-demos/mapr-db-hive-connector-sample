@@ -1,4 +1,4 @@
-package com.mapr.hiveconnector.examples;
+package com.mapr.hiveconnector.examples.querying;
 
 import com.mapr.hiveconnector.utils.DaoManager;
 
@@ -32,7 +32,7 @@ public class QueryingComplexNestedStructures {
             + "languages array<string>, religions map<string,array<int>>) ";
 
     /**
-     * The insertSQL is responsible for inserting data
+     * The insertSQL for inserting data
      * from intermediate table to a hive and Mapr DB tables.
      */
     private static String insertSQL = "INSERT INTO TABLE " + tableName + " SELECT "
@@ -47,7 +47,8 @@ public class QueryingComplexNestedStructures {
         try (Connection connection = DaoManager.getInstance().getConnection();
              Statement state = connection.createStatement()) {
 
-           // prepareTable(state);
+            // If the table is already prepared you can comment out the operation below
+            prepareTable(state);
 
             System.out.println("INFO: -= Select all data from the table");
             selectAllFromTable(state, tableName, 1);

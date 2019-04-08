@@ -1,4 +1,4 @@
-package com.mapr.hiveconnector.examples;
+package com.mapr.hiveconnector.examples.querying;
 
 import com.mapr.hiveconnector.utils.DaoManager;
 
@@ -19,7 +19,7 @@ public class QueryingComplexDataType {
     private static String tableName = "artists_java";
 
     /**
-     * The SQL selectSQL for inserting values into table.
+     * The selectSQL for selecting values into table.
      */
     private static String selectSQL = "SELECT name, albums.name[2] FROM "
             + tableName + " WHERE albums.name[2] IS NOT NULL LIMIT 4";

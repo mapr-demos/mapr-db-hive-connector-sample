@@ -35,7 +35,7 @@ public class LoadDataToTables {
             + "rating double, slug_name string) ";
 
     /**
-     * The insertSQL is responsible for inserting data
+     * The insertSQL is inserting data
      * from intermediate table to a hive and Mapr DB tables.
      */
     private static String insertSQL = "INSERT INTO TABLE " + tableName + " SELECT "

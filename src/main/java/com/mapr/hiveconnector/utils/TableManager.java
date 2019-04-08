@@ -78,5 +78,24 @@ public class TableManager {
         }
     }
 
+    /**
+     * The method checks if the table exists into a database.
+     * @param statement SQL statement.
+     * @param tableName name of the table to check.
+     * @return true if the table exists or false - otherwise.
+     * @throws SQLException if SQL exception occurs.
+     */
+    public static boolean existTable(Statement statement, String tableName) throws SQLException {
+        boolean exist = false;
+        ResultSet resultSet = statement.executeQuery("show tables");
+        while (resultSet.next()) {
+            if (tableName.equals(resultSet.getString(1))) {
+                exist = true;
+                break;
+            }
+        }
+        return exist;
+    }
+
 }
 
