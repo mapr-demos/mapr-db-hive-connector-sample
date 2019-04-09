@@ -23,7 +23,7 @@ The examples to discover the key features of the Hive connector for MapR Databas
   - [Update statement limitations](#update-statement-limitations)
 * [Merging statements](#merging-statements)
   - [Merge statement limitations](#merge-statement-limitations)
-* [Run the application from the IDE-optional](#run-the-application-from-the-ide-optional)
+* [Run the application from the IDE](#run-the-application-from-the-ide)
 
 
 
@@ -101,14 +101,14 @@ In a terminal window type the following command:.
 !!! $ java -cp  
 ```
 
-Verifying that the data are inserted using Hive, demonstrate the class [`SelectFromTablePrimitiveTypes`](src/main/java/com/mapr/hiveconnector/examples/querying/ShowTables.java):
+Verifying that the data are inserted using Hive, demonstrate the class [`SelectFromTablePrimitiveTypes`](src/main/java/com/mapr/hiveconnector/examples/utils/ShowTables.java):
 In a terminal window type the following command:
 
 ```
 !!! $ java -cp  
 ```
 
->To see how to do this operation using Hive CLI click the [link](doc/tutorials/001-hive-connector-cli#creating-tables)
+>To see how to do this operation using Hive CLI click the [link](doc/tutorials/001-hive-connector-cli.md#creating-tables)
 
 
 ### Showing all tables in the database
@@ -123,7 +123,7 @@ In a terminal window, connected as mapr user type the following commands to run 
 !!! $ java -cp  
 ```
 
->To see how to do this operation using Hive CLI click the [link](doc/tutorials/001-hive-connector-cli#showing-all-tables-in-the-database)
+>To see how to do this operation using Hive CLI click the [link](doc/tutorials/001-hive-connector-cli.md#showing-all-tables-in-the-database)
 
 
 ### Loading data to MapR DB using the Hive connector
@@ -239,7 +239,7 @@ In a terminal window type the following command:
 !!! $ java -cp  
 ```
 
->To see how to do this operation using Hive CLI click the [link](doc/tutorials/001-hive-connector-cli#loading-data-to-mapr-db-using-the-hive-connector)
+>To see how to do this operation using Hive CLI click the [link](doc/tutorials/001-hive-connector-cli.md#loading-data-to-mapr-db-using-the-hive-connector)
 
 
 #### Querying statements
@@ -258,7 +258,7 @@ In a terminal window type the following command:
 !!! $ java -cp  
 ```
 
->To see how to do this operation using Hive CLI click the [link](doc/tutorials/001-hive-connector-cli#primitive-data-types)
+>To see how to do this operation using Hive CLI click the [link](doc/tutorials/001-hive-connector-cli.md#primitive-data-types)
 
 
 ##### Complex data type
@@ -272,7 +272,7 @@ In a terminal window type the following command:
 !!! $ java -cp  
 ```
 
->To see how to do this operation using Hive CLI click the [link](doc/tutorials/001-hive-connector-cli#complex-data-type)
+>To see how to do this operation using Hive CLI click the [link](doc/tutorials/001-hive-connector-cli.md#complex-data-type)
 
 
 ##### Complex nested structures
@@ -296,7 +296,7 @@ In a terminal window type the following command:
 </details>
 
 
->To see how to do this operation using Hive CLI click the [link](doc/tutorials/001-hive-connector-cli#complex-nested-structures)
+>To see how to do this operation using Hive CLI click the [link](doc/tutorials/001-hive-connector-cli.md#complex-nested-structures)
 
 
 #### Inserting statements
@@ -313,7 +313,7 @@ In a terminal window type the following command:
 !!! $ java -cp  
 ```
 
->To see how to do this operation using Hive CLI click the [link](doc/tutorials/001-hive-connector-cli#single-row-insert)
+>To see how to do this operation using Hive CLI click the [link](doc/tutorials/001-hive-connector-cli.md#single-row-insert)
 
 
 ##### Multiple-row insert
@@ -330,7 +330,7 @@ In a terminal window type the following command:
 !!! $ java -cp  
 ```
 
->To see how to do this operation using Hive CLI click the [link](doc/tutorials/001-hive-connector-cli#multiple-row-insert)
+>To see how to do this operation using Hive CLI click the [link](doc/tutorials/001-hive-connector-cli.md#multiple-row-insert)
 
 
 ##### Overwriting data
@@ -344,7 +344,7 @@ In a terminal window type the following command:
 !!! $ java -cp  
 ```
 
->To see how to do this operation using Hive CLI click the [link](doc/tutorials/001-hive-connector-cli#overwriting-data)
+>To see how to do this operation using Hive CLI click the [link](doc/tutorials/001-hive-connector-cli.md#overwriting-data)
 
 
 #### Updating statements
@@ -363,7 +363,7 @@ In a terminal window type the following command:
 !!! $ java -cp  
 ```
 
->To see how to do this operation using Hive CLI click the [link](doc/tutorials/001-hive-connector-cli#update-primitive-data-types)
+>To see how to do this operation using Hive CLI click the [link](doc/tutorials/001-hive-connector-cli.md#update-primitive-data-types)
 
 
 ##### Update complex data types
@@ -377,7 +377,7 @@ In a terminal window type the following command:
 !!! $ java -cp  
 ```
 
->To see how to do this operation using Hive CLI click the [link](doc/tutorials/001-hive-connector-cli#update-complex-data-types)
+>To see how to do this operation using Hive CLI click the [link](doc/tutorials/001-hive-connector-cli.md#update-complex-data-types)
 
 
 ##### Update complex nested data types
@@ -391,7 +391,7 @@ In a terminal window type the following command:
 !!! $ java -cp  
 ```
 
->To see how to do this operation using Hive CLI click the [link](doc/tutorials/001-hive-connector-cli#update-complex-nested-data-types)
+>To see how to do this operation using Hive CLI click the [link](doc/tutorials/001-hive-connector-cli.md#update-complex-nested-data-types)
 
 
 ##### Update statement limitations
@@ -452,7 +452,7 @@ For example, you have a structure stored as one field in a Hive table:
 {"name":"Johnson","surname":"Fall","age":23,"gender":"MALE"}
 ```
 
->To see how to do this operation using Hive CLI click the [link](doc/tutorials/001-hive-connector-cli#merging-statements)
+>To see how to do this operation using Hive CLI click the [link](doc/tutorials/001-hive-connector-cli.md#merging-statements)
 
 
 #### Merge statement limitations
