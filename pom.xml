@@ -15,6 +15,7 @@
         <jdk.source.version>1.8</jdk.source.version>
         <jdk.target.version>1.8</jdk.target.version>
         <hive.jdbc.version>2.3.3-mapr-1901</hive.jdbc.version>
+        <maven-javadoc-plugin>3.0.0</maven-javadoc-plugin>
     </properties>
 
     <repositories>
@@ -40,7 +41,6 @@
             <version>1.7.10</version>
             <scope>test</scope>
         </dependency>
-
     </dependencies>
 
     <build>
@@ -53,7 +53,22 @@
                     <target>${jdk.target.version}</target>
                 </configuration>
             </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-site-plugin</artifactId>
+                <version>3.7.1</version>
+            </plugin>
         </plugins>
     </build>
+
+    <reporting>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-javadoc-plugin</artifactId>
+                <version>3.0.1</version>
+            </plugin>
+        </plugins>
+    </reporting>
 
 </project>

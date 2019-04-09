@@ -1,6 +1,6 @@
 package com.mapr.hiveconnector.examples.inserting;
 
-import com.mapr.hiveconnector.examples.CreateTablePrimitiveTypes;
+import com.mapr.hiveconnector.examples.creating.CreateTablePrimitiveTypes;
 import com.mapr.hiveconnector.utils.DaoManager;
 
 import java.sql.Connection;

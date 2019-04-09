@@ -1,17 +1,13 @@
 package com.mapr.hiveconnector.examples.inserting;
 
 import com.mapr.hiveconnector.utils.DaoManager;
-import org.apache.avro.generic.GenericData;
-import org.apache.hadoop.hbase.regionserver.ScannerContext;
 
 import java.sql.Connection;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.ArrayList;
-import java.util.List;
 
-import static com.mapr.hiveconnector.utils.TableManager.*;
+import static com.mapr.hiveconnector.utils.TableManager.existTable;
+import static com.mapr.hiveconnector.utils.TableManager.selectAllFromTable;
 
 /**
  * The class MultipleRowInsert describes how to
