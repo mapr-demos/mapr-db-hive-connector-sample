@@ -28,6 +28,6 @@ $ mvn site
 Then open your favorite browser and navigate to:
 
 ```
-http://localhost:63342/mapr-db_hive_connector-sample/target/site/apidocs/index.html
+http://localhost:63342/mapr-db-hive-connector-sample/target/site/apidocs/index.html
 ```
 

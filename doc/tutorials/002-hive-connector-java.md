@@ -57,14 +57,54 @@ $ mvn clean package
 > If you did not install MapR Client copy the application jar to your MapR cluster, for example:
 
 ```
-scp ./target/mapr-db_hive_connector-sample-1.0-SNAPSHOT.jar mapr@mapr60:/home/mapr/
+scp ./target/mapr-db-hive-connector-sample-1.0-SNAPSHOT.jar mapr@mapr60:/home/mapr/
 ```
 
 > Where `mapr60` is one of the node of the MapR cluster.
 
 
 ### Establishing a connection with Hive
-The configuration connection properties are located in `src/main/resources/hive_mapr_db.properties`:
+
+You can configure connection properties in a few way:
+
+##### 1. By pass the configuration parameters via command line arguments.
+
+>In this case the priority is the highest.
+
+The arguments order:
+
+```
+driverClassName = args[0];
+url = args[1];
+host = args[2];
+port = args[3];
+database = args[4];
+user = args[5];
+password = args[6];
+```
+
+For example:
+
+```
+java -cp mapr-db-hive-connector-sample-1.0-SNAPSHOT.jar:`mapr clientclasspath` com.mapr.hiveconnector.utils.ShowTables org.apache.hive.jdbc.HiveDriver jdbc:hive2:// localhost 10000 default mapr mapr
+```
+
+##### 2. By set connection parameters in to system variables. In this case the app examples will use them.
+>In this case, the app will use them if the command line arguments not set, or they are bad.
+
+```
+export HIVE_DRIVER_CLASS_NAME=org.apache.hive.jdbc.HiveDriver
+export HIVE_DRIVER_CONNECTION_URL=jdbc:hive2://
+export HIVE_HOST=localhost
+export HIVE_PORT=10000
+export HIVE_DATABASE_NAME=default
+export HIVE_DATABASE_USER=mapr
+export HIVE_DATABASE_USER_PASSWORD=mapr
+```
+
+##### 3. By set configuration connection parameters into property file, located `src/main/resources/hive_mapr_db.properties`:
+>In this case the properties will use as default. The priority is the lowest.
+
 ```
 uri=jdbc:hive2://192.168.33.13:10000/
 user=mapr
@@ -82,7 +122,7 @@ The class [`CreateTablePrimitiveTypes`](src/main/java/com/mapr/hiveconnector/exa
 In a terminal window type the following commands to run the sample:
 
 ```
-!!! $ java -cp  
+$ java -cp mapr-db-hive-connector-sample-1.0-SNAPSHOT.jar:`mapr clientclasspath` com.mapr.hiveconnector.examples.creating.CreateTablePrimitiveTypes
 ```
 
 This program creates the `primitive_types_from_java` table in the database.
@@ -91,21 +131,21 @@ Verifying the table is created in Hive, demonstrate utility class [`ShowTables`]
 In a terminal window type the following command to find out the table `primitive_types_from_java` is created.
 
 ```
-!!! $ java -cp  
+$ java -cp mapr-db-hive-connector-sample-1.0-SNAPSHOT.jar:`mapr clientclasspath` com.mapr.hiveconnector.utils.ShowTables  
 ```
 
 Inserting data into table `primitive_types_from_java` from Java demonstrate the class [`InsertIntoTablePrimitiveTypes`](src/main/java/com/mapr/hiveconnector/examples/inserting/InsertIntoTablePrimitiveTypes.java).
 In a terminal window type the following command:.
 
 ```
-!!! $ java -cp  
+$ java -cp mapr-db-hive-connector-sample-1.0-SNAPSHOT.jar:`mapr clientclasspath` com.mapr.hiveconnector.examples.inserting.InsertIntoTablePrimitiveTypes  
 ```
 
 Verifying that the data are inserted using Hive, demonstrate the class [`SelectFromTablePrimitiveTypes`](src/main/java/com/mapr/hiveconnector/examples/utils/ShowTables.java):
 In a terminal window type the following command:
 
 ```
-!!! $ java -cp  
+$ java -cp mapr-db-hive-connector-sample-1.0-SNAPSHOT.jar:`mapr clientclasspath` com.mapr.hiveconnector.examples.querying.SelectFromTablePrimitiveTypes 
 ```
 
 >To see how to do this operation using Hive CLI click the [link](doc/tutorials/001-hive-connector-cli.md#creating-tables)
@@ -120,7 +160,7 @@ The class [`ShowTables`](src/main/java/com/mapr/hiveconnector/utils/ShowTables.j
 In a terminal window, connected as mapr user type the following commands to run the sample:
 
 ```
-!!! $ java -cp  
+$ java -cp mapr-db-hive-connector-sample-1.0-SNAPSHOT.jar:`mapr clientclasspath` com.mapr.hiveconnector.utils.ShowTables 
 ```
 
 >To see how to do this operation using Hive CLI click the [link](doc/tutorials/001-hive-connector-cli.md#showing-all-tables-in-the-database)
@@ -135,7 +175,7 @@ We will load data stored located in `/dataset/artists.json` file.
 Copy the json file to the node's local file system or Mapr Fs:
  
 ```
-!!! $ java -cp  
+$ scp ./dataset/artists.json mapr@mapr60:/tmp/datasets/
 ```
 
 **artists**
@@ -236,7 +276,7 @@ how to load data in MapR DB JSON tables, using the Hive connector.
 In a terminal window type the following command:
 
 ```
-!!! $ java -cp  
+$ java -cp mapr-db-hive-connector-sample-1.0-SNAPSHOT.jar:`mapr clientclasspath` com.mapr.hiveconnector.examples.loading.LoadDataToTables  
 ```
 
 >To see how to do this operation using Hive CLI click the [link](doc/tutorials/001-hive-connector-cli.md#loading-data-to-mapr-db-using-the-hive-connector)
@@ -255,7 +295,7 @@ select primitive data types from table `primitive_types_from_java`:
 In a terminal window type the following command:
 
 ```
-!!! $ java -cp  
+$ java -cp mapr-db-hive-connector-sample-1.0-SNAPSHOT.jar:`mapr clientclasspath` com.mapr.hiveconnector.examples.querying.SelectFromTablePrimitiveTypes
 ```
 
 >To see how to do this operation using Hive CLI click the [link](doc/tutorials/001-hive-connector-cli.md#primitive-data-types)
@@ -269,7 +309,7 @@ select complex data types from table `artists_java`:
 In a terminal window type the following command:
 
 ```
-!!! $ java -cp  
+$ java -cp mapr-db-hive-connector-sample-1.0-SNAPSHOT.jar:`mapr clientclasspath` com.mapr.hiveconnector.examples.querying.QueryingComplexDataType
 ```
 
 >To see how to do this operation using Hive CLI click the [link](doc/tutorials/001-hive-connector-cli.md#complex-data-type)
@@ -284,7 +324,7 @@ select complex nested structures from table `json_nested_java`:
 In a terminal window type the following command:
 
 ```
-!!! $ java -cp  
+$ java -cp mapr-db-hive-connector-sample-1.0-SNAPSHOT.jar:`mapr clientclasspath` com.mapr.hiveconnector.examples.querying.QueryingComplexNestedStructures 
 ```
 
 <details> 
@@ -310,7 +350,7 @@ To demonstrate this function use class [`SingleRowInsert`](src/main/java/com/map
 In a terminal window type the following command:
 
 ```
-!!! $ java -cp  
+$ java -cp mapr-db-hive-connector-sample-1.0-SNAPSHOT.jar:`mapr clientclasspath` com.mapr.hiveconnector.examples.inserting.SingleRowInsert  
 ```
 
 >To see how to do this operation using Hive CLI click the [link](doc/tutorials/001-hive-connector-cli.md#single-row-insert)
@@ -327,7 +367,7 @@ The class [`MultipleRowInsert`](src/main/java/com/mapr/hiveconnector/examples/in
 In a terminal window type the following command:
 
 ```
-!!! $ java -cp  
+$ java -cp mapr-db-hive-connector-sample-1.0-SNAPSHOT.jar:`mapr clientclasspath` com.mapr.hiveconnector.examples.inserting.MultipleRowInsert
 ```
 
 >To see how to do this operation using Hive CLI click the [link](doc/tutorials/001-hive-connector-cli.md#multiple-row-insert)
@@ -341,7 +381,7 @@ the `INSERT` statement on a dummy table to overwrite one or more complete rows i
 In a terminal window type the following command:
 
 ```
-!!! $ java -cp  
+$ java -cp mapr-db-hive-connector-sample-1.0-SNAPSHOT.jar:`mapr clientclasspath` com.mapr.hiveconnector.examples.inserting.overwriting.Overwriting  
 ```
 
 >To see how to do this operation using Hive CLI click the [link](doc/tutorials/001-hive-connector-cli.md#overwriting-data)
@@ -360,7 +400,7 @@ how to update primitive data types in MapR Database JSON tables.
 In a terminal window type the following command:
 
 ```
-!!! $ java -cp  
+$ java -cp mapr-db-hive-connector-sample-1.0-SNAPSHOT.jar:`mapr clientclasspath` com.mapr.hiveconnector.examples.updating.UpdatePrimitiveDataTypes
 ```
 
 >To see how to do this operation using Hive CLI click the [link](doc/tutorials/001-hive-connector-cli.md#update-primitive-data-types)
@@ -374,7 +414,7 @@ how to update complex data types in MapR Database JSON tables.
 In a terminal window type the following command:
 
 ```
-!!! $ java -cp  
+$ java -cp mapr-db-hive-connector-sample-1.0-SNAPSHOT.jar:`mapr clientclasspath` com.mapr.hiveconnector.examples.updating.UpdateComplexDataTypes 
 ```
 
 >To see how to do this operation using Hive CLI click the [link](doc/tutorials/001-hive-connector-cli.md#update-complex-data-types)
@@ -388,7 +428,7 @@ how to update complex nested data types in MapR Database JSON tables.
 In a terminal window type the following command:
 
 ```
-!!! $ java -cp  
+$ java -cp mapr-db-hive-connector-sample-1.0-SNAPSHOT.jar:`mapr clientclasspath` com.mapr.hiveconnector.examples.updating.UpdateComplexNestedDataTypes
 ```
 
 >To see how to do this operation using Hive CLI click the [link](doc/tutorials/001-hive-connector-cli.md#update-complex-nested-data-types)
@@ -417,7 +457,7 @@ how to merge two tables joined by key.
 In a terminal window type the following command:
 
 ```
-!!! $ java -cp  
+$ java -cp mapr-db-hive-connector-sample-1.0-SNAPSHOT.jar:`mapr clientclasspath` com.mapr.hiveconnector.examples.merging.MergeWhenIdIsJoinKey
 ```
 
 *The age column is updated and a new `id` column is inserted.*
@@ -431,7 +471,7 @@ how to merge two tables which have a few matched rows.
 In a terminal window type the following command:
 
 ```
-!!! $ java -cp  
+$ java -cp mapr-db-hive-connector-sample-1.0-SNAPSHOT.jar:`mapr clientclasspath` com.mapr.hiveconnector.examples.merging.MergeMultipleRowsMatch 
 ```
 
 ##### Merge on mixed data types
@@ -442,7 +482,7 @@ how to merge two tables which have mixed data types, such as arrays, maps, and s
 In a terminal window type the following command:
 
 ```
-!!! $ java -cp  
+$ java -cp mapr-db-hive-connector-sample-1.0-SNAPSHOT.jar:`mapr clientclasspath` com.mapr.hiveconnector.examples.merging.MergeMixedDataTypes
 ```
 
 >It is important to note that you cannot update only a part of a complex structure field. You cannot update only the age field in the structure. You can only replace all values of the structure with new ones. See [Understanding the UPDATE Statement](https://mapr.com/docs/61/Hive/UPDATEStatementForHive-mapr-dbJSONtables.html) for details. 

@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.mapr</groupId>
-    <artifactId>mapr-db_hive_connector-sample</artifactId>
+    <artifactId>mapr-db-hive-connector-sample</artifactId>
     <version>1.0-SNAPSHOT</version>
 
     <!-- Output to jar format -->
@@ -15,7 +15,10 @@
         <jdk.source.version>1.8</jdk.source.version>
         <jdk.target.version>1.8</jdk.target.version>
         <hive.jdbc.version>2.3.3-mapr-1901</hive.jdbc.version>
-        <maven-javadoc-plugin>3.0.0</maven-javadoc-plugin>
+        <slf4j.version>1.7.10</slf4j.version>
+        <maven.site.plugin.version>3.7.1</maven.site.plugin.version>
+        <maven.shade.plugin.version>3.0.0</maven.shade.plugin.version>
+        <maven.javadoc.plugin.version>3.0.1</maven.javadoc.plugin.version>
     </properties>
 
     <repositories>
@@ -38,8 +41,7 @@
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-log4j12</artifactId>
-            <version>1.7.10</version>
-            <scope>test</scope>
+            <version>${slf4j.version}</version>
         </dependency>
     </dependencies>
 
@@ -56,7 +58,32 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-site-plugin</artifactId>
-                <version>3.7.1</version>
+                <version>${maven.site.plugin.version}</version>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-shade-plugin</artifactId>
+                <version>${maven.shade.plugin.version}</version>
+                <configuration>
+                    <filters>
+                        <filter>
+                            <artifact>*:*</artifact>
+                            <excludes>
+                                <exclude>META-INF/*.SF</exclude>
+                                <exclude>META-INF/*.DSA</exclude>
+                                <exclude>META-INF/*.RSA</exclude>
+                            </excludes>
+                        </filter>
+                    </filters>
+                </configuration>
+                <executions>
+                    <execution>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>shade</goal>
+                        </goals>
+                    </execution>
+                </executions>
             </plugin>
         </plugins>
     </build>
@@ -66,7 +93,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-javadoc-plugin</artifactId>
-                <version>3.0.1</version>
+                <version>${maven.javadoc.plugin.version}</version>
             </plugin>
         </plugins>
     </reporting>

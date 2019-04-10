@@ -62,6 +62,7 @@ public class UpdateComplexNestedDataTypes {
      * @param args arrays of arguments.
      */
     public static void main(String[] args) {
+        DaoManager.getInstance().setConfigParam(args);
         try (Connection connection = DaoManager.getInstance().getConnection();
              Statement state = connection.createStatement()) {
 

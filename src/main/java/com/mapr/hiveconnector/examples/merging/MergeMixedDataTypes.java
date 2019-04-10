@@ -7,7 +7,6 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 import static com.mapr.hiveconnector.utils.TableManager.*;
-import static com.mapr.hiveconnector.utils.TableManager.selectAllFromTable;
 
 /**
  * The class MergeMixedDataTypes describes merging operation
@@ -84,6 +83,7 @@ public class MergeMixedDataTypes {
      * @param args arrays of arguments.
      */
     public static void main(String[] args) {
+        DaoManager.getInstance().setConfigParam(args);
         try (Connection connection = DaoManager.getInstance().getConnection();
              Statement state = connection.createStatement()) {
 

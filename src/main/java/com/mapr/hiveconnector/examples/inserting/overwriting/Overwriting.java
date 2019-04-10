@@ -71,9 +71,9 @@ public class Overwriting {
      * @param args arrays of arguments.
      */
     public static void main(String[] args) {
+        DaoManager.getInstance().setConfigParam(args);
         try (Connection connection = DaoManager.getInstance().getConnection();
              Statement state = connection.createStatement()) {
-            //Preparing environment
             new SingleRowInsert().run(state);
             new MultipleRowInsert().run(state);
 
