@@ -138,18 +138,18 @@ STORED BY 'org.apache.hadoop.hive.maprdb.json.MapRDBJsonStorageHandler'
 TBLPROPERTIES("maprdb.table.name" = "/primitive_types","maprdb.column.id" = "id"); 
 ```
 
->To see how to do this operation using Hive connector from Java click the [link](doc/tutorials/002-hive-connector-java.md#creating-tables)
+>To see how to do this operation using Hive connector from Java click the [link](002-hive-connector-java.md#creating-tables)
 
 
 ### Showing all tables in the database
 This section describes how we can get the list of all tables using Hive CLI:
 
 ```
-hive> hive> show tables;
+hive> show tables;
 primitive_types
 ```
 
->To see how to do this operation using Hive connector from Java click the [link](doc/tutorials/002-hive-connector-java.md#showing-all-tables-in-the-database)
+>To see how to do this operation using Hive connector from Java click the [link](002-hive-connector-java.md#showing-all-tables-in-the-database)
 
 ### Loading data to MapR DB using the Hive connector
 
@@ -248,7 +248,34 @@ Contains `10281` Artist JSON documents, which are ready to be imported into MapR
   
 </details>
 
-1. Add SerDe JAR for JSON.
+1. To parce JSON table for our example, we will use JSON SerDe (serializer/deserializer).
+   We have to add SerDe jar as a resource to the class path. If we do not explicitly bundle SerDe jar for JSON we get RuntimeException as below.
+   
+   <details> 
+   
+     <summary>RuntimeException caused by JsonSerDe not found</summary>
+     
+     ```
+   Error: java.lang.RuntimeException: Error in configuring object
+   ...
+   Caused by: java.lang.reflect.InvocationTargetException
+   ...
+   Caused by: java.lang.RuntimeException: Error in configuring object
+   ...
+   Caused by: java.lang.reflect.InvocationTargetException
+   ...
+   Caused by: java.lang.RuntimeException: Map operator initialization failed
+   ...
+   Caused by: org.apache.hadoop.hive.ql.metadata.HiveException: java.lang.ClassNotFoundException: Class org.apache.hive.hcatalog.data.JsonSerDe not found
+   ...
+   Caused by: java.lang.ClassNotFoundException: Class org.apache.hive.hcatalog.data.JsonSerDe not found
+     ```
+   
+   </details>  
+
+
+
+Add SerDe JAR for JSON.
 ```
 hive> add jar /opt/mapr/hive/hive-2.3/hcatalog/share/hcatalog/hive-hcatalog-core-2.3.3-mapr-1901.jar;
 ```
@@ -321,7 +348,8 @@ INSERT INTO TABLE artists select
 from artists_load;
 ```
 
->To see how to do this operation using Hive connector from Java click the [link](doc/tutorials/002-hive-connector-java.md#loading-data-to-mapr-db-using-the-hive-connector)
+>To see how to do this operation using Hive connector from Java click the [link](002-hive-connector-java.md#loading-data-to-mapr-db-using-the-hive-connector)
+
 
 #### Querying statements
 
@@ -341,7 +369,7 @@ hive> select `_id`, name, rating, area from artists limit 4;
 ```
 >Alternatively, use `org.openx.data.jsonserde.JsonSerDe` and add `WITH SERDEPROPERTIES ("mapping.id" = "_id" )` to your table definition.
 
->To see how to do this operation using Hive connector from Java click the [link](doc/tutorials/002-hive-connector-java.md#primitive-data-types)
+>To see how to do this operation using Hive connector from Java click the [link](002-hive-connector-java.md#primitive-data-types)
 
 ##### Complex data type
 
@@ -354,7 +382,7 @@ The Real McKenzies          The Real McKenzies
 Melbourne Ska Orchestra     The Best Things in Life Are Free
 ```
 
->To see how to do this operation using Hive connector from Java click the [link](doc/tutorials/002-hive-connector-java.md#complex-data-type)
+>To see how to do this operation using Hive connector from Java click the [link](002-hive-connector-java.md#complex-data-type)
 
 ##### Complex nested structures
 
@@ -401,7 +429,7 @@ hive> select religions['catholic'][0] from json_nested;
 10
 ```
 
->To see how to do this operation using Hive connector from Java click the [link](doc/tutorials/002-hive-connector-java.md#complex-nested-structures)
+>To see how to do this operation using Hive connector from Java click the [link](002-hive-connector-java.md#complex-nested-structures)
 
 
 #### Inserting statements
@@ -462,7 +490,7 @@ maprdb mapr:> find /nested_data
 </details> 
 
 
->To see how to do this operation using Hive connector from Java click the [link](doc/tutorials/002-hive-connector-java.md#single-row-insert)
+>To see how to do this operation using Hive connector from Java click the [link](002-hive-connector-java.md#single-row-insert)
 
 
 ##### Multiple-row insert
@@ -530,7 +558,7 @@ maprdb mapr:> find /nested_data
 
 </details> 
 
->To see how to do this operation using Hive connector from Java click the [link](doc/tutorials/002-hive-connector-java.md#multiple-row-insert)
+>To see how to do this operation using Hive connector from Java click the [link](002-hive-connector-java.md#multiple-row-insert)
 
 ##### Overwriting data
 
@@ -619,7 +647,7 @@ maprdb mapr:> findbyid /nested_data --id 001
 </details> 
 
 
->To see how to do this operation using Hive connector from Java click the [link](doc/tutorials/002-hive-connector-java.md#overwriting-data)
+>To see how to do this operation using Hive connector from Java click the [link](002-hive-connector-java.md#overwriting-data)
 
 
 #### Updating statements
@@ -661,7 +689,7 @@ maprdb mapr:> find /primitive_types
 
 </details> 
 
->To see how to do this operation using Hive connector from Java click the [link](doc/tutorials/002-hive-connector-java.md#update-primitive-data-types)
+>To see how to do this operation using Hive connector from Java click the [link](002-hive-connector-java.md#update-primitive-data-types)
 
 ##### Update complex data types
 
@@ -708,7 +736,7 @@ maprdb mapr:> find /complex_types
 
 </details> 
 
->To see how to do this operation using Hive connector from Java click the [link](doc/tutorials/002-hive-connector-java.md#update-complex-data-types)
+>To see how to do this operation using Hive connector from Java click the [link](002-hive-connector-java.md#update-complex-data-types)
 
 ##### Update complex nested data types
 
@@ -757,7 +785,7 @@ maprdb mapr:> find /complex_nested_data
 
 </details> 
 
->To see how to do this operation using Hive connector from Java click the [link](doc/tutorials/002-hive-connector-java.md#update-complex-nested-data-types)
+>To see how to do this operation using Hive connector from Java click the [link](002-hive-connector-java.md#update-complex-nested-data-types)
 
 ##### Update statement limitations
 
@@ -767,6 +795,30 @@ The `UPDATE` statement has the following known limitations:
 -   The `UPDATE` statement is fully supported only for primitive data types (see [Connecting to MapR Database](https://mapr.com/docs/61/Hive/ConnectingToMapR-DB.html)).
 -   The `UPDATE` statement is partly supported for complex data types; you can replace only the whole value of a complex type with new a value.
 -   You cannot update the maprdb.column.id value.
+
+> Also keep in mind that if you update a document without `_id` specific `WHERE` clause, the HIVE will update all document.
+
+
+<details> 
+
+  <summary>Example update with no `_id` specified `WHERE` clause</summary>
+  
+```sh
+hive> SELECT * FROM complex_types;
+1	{"age":28}	["Cat","Cat","Cat"]	{"name":"Santa","surname":"Claus","age":1000,"gender":"MALE"}
+2	{"age":8}	["Pet","Pet","Pet"]	{"name":"Santa1","surname":"Claus1","age":10,"gender":"FEMALE"}
+
+hive> UPDATE complex_types SET
+    info = map('year', 32), pets = array('Dog', 'Cat', 'Pig'), 
+    user_info = named_struct('name', 'Vasco', 'surname', 'da Gama','age', 558,'gender', 'MALE');
+    
+hive> SELECT * FROM complex_types;
+1	{"year":32}	["Dog","Cat","Pig"]	{"name":"Vasco","surname":"da Gama","age":558,"gender":"MALE"}
+2	{"year":32}	["Dog","Cat","Pig"]	{"name":"Vasco","surname":"da Gama","age":558,"gender":"MALE"}
+```
+
+</details> 
+
 
 #### Merging statements
 
@@ -925,7 +977,7 @@ hive> MERGE INTO customer_db_json trg USING customer_new src ON src.id = trg.id
   <summary>Verifying the target table in Hive and Mapr DB.</summary>
   
 ```sh
-hive> hive> select * from customer_db_json;
+hive> select * from customer_db_json;
 001	Dorothi	Hogward	45
 002	Michael	Watson	27
 003	Den	Brown	33
@@ -1039,7 +1091,7 @@ For example, you have a structure stored as one field in a Hive table:
 ```
 
 
->To see how to do this operation using Hive connector from Java click the [link](doc/tutorials/002-hive-connector-java.md#merging-statements)
+>To see how to do this operation using Hive connector from Java click the [link](002-hive-connector-java.md#merging-statements)
 
 
 #### Merge statement limitations
