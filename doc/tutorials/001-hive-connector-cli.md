@@ -141,6 +141,70 @@ TBLPROPERTIES("maprdb.table.name" = "/primitive_types","maprdb.column.id" = "id"
 >To see how to do this operation using Hive connector from Java click the [link](002-hive-connector-java.md#creating-tables)
 
 
+##### Features of working with TIMESTAMP data type in Hive table and MapR DB JSON table
+
+The TIMESTAMP data type, in HIVE, stores timestamps with nanosecond precision. Hive comes with UDFs for converting between Hive timestamps, Unix timestamps (seconds since the Unix epoch), and strings, which makes most common date operations tractable. 
+
+TIMESTAMP does not encapsulate a time zone; however, the to_utc_timestamp and from_utc_timestamp functions make it possible to do time zone conversions.
+
+
+For example:
+
+```sh
+`to_utc_timestamp()` - converts a timestamp in a given timezone to UTC 
+
+hive> select to_utc_timestamp(2592000.0,'PST'); 
+hive> select to_utc_timestamp(2592000000,'PST');
+hive> select to_utc_timestamp(timestamp '1970-01-30 16:00:00','PST');
+
+all return the timestamp 1970-01-31 00:00:00.
+```
+
+```sh
+`from_utc_timestamp` - converts a timestamp in UTC to a given timezone 
+
+hive> select from_utc_timestamp(2592000.0,'PST');
+hive> select from_utc_timestamp(2592000000,'PST');
+hive> select from_utc_timestamp(timestamp '1970-01-30 16:00:00','PST');
+
+all return the timestamp 1970-01-30 08:00:00.
+```
+
+```sh
+hive> select to_utc_timestamp(from_unixtime(unix_timestamp('04/24/2019 01:59:01','MM/dd/yyyy hh:mm:ss'),'yyyy-MM-dd hh:mm:ss'),"EST");
+2019-04-24 06:59:01
+```
+
+
+>Also, keep in mind if we pass the timestamp with TZ format the value will insert as a NULL into Hive table and will not insert into MapR DB JSON table.
+
+<details> 
+  <summary>Example</summary>
+  
+  ```sh
+hive> CREATE TABLE timestamp_types (
+>     doc_id string,
+>     da date,
+>     ts timestamp)
+> STORED BY 'org.apache.hadoop.hive.maprdb.json.MapRDBJsonStorageHandler'
+> TBLPROPERTIES("maprdb.table.name" = "/timestamp_types","maprdb.column.id" = "doc_id");
+
+hive> INSERT INTO TABLE timestamp_types VALUES ('1', '2017-11-29', '2017-03-17 00:14:13');
+
+hive> INSERT INTO TABLE timestamp_types VALUES ('2', '2017-11-29', '2017-02-16T11:24:29.000Z');
+
+hive> SELECT * FROM timestamp_types;
+1	2017-11-29	2017-03-17 00:14:13
+2	2017-11-29	NULL
+
+maprdb mapr:> find /timestamp_types
+{"_id":"1","da":{"$dateDay":"2017-11-29"},"ts":{"$date":"2017-03-17T00:14:13.000Z"}}
+{"_id":"2","da":{"$dateDay":"2017-11-29"}}
+  ```
+
+</details>
+ 
+
 ### Showing all tables in the database
 This section describes how we can get the list of all tables using Hive CLI:
 
@@ -248,8 +312,10 @@ Contains `10281` Artist JSON documents, which are ready to be imported into MapR
   
 </details>
 
-1. To parce JSON table for our example, we will use JSON SerDe (serializer/deserializer).
-   We have to add SerDe jar as a resource to the class path. If we do not explicitly bundle SerDe jar for JSON we get RuntimeException as below.
+1. To parse JSON table for our example, we will use JSON SerDe (serializer/deserializer).
+   We have to add SerDe jar as a resource to the class path. 
+   
+   If we do not explicitly bundle SerDe jar for JSON we get RuntimeException as shown below.
    
    <details> 
    
@@ -818,6 +884,8 @@ hive> SELECT * FROM complex_types;
 ```
 
 </details> 
+
+
 
 
 #### Merging statements

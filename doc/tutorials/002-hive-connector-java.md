@@ -543,5 +543,4 @@ For example if your desktop user is "jdoe" with the id 501, create the user on y
 
 **3- [Clone and build the project](#clone-and-build-the-project)**
 
->>>>>>> f77226a... Fixed cross-links.
 **4- Navigate to the interested class and run the main method in a class**
